@@ -1,1 +1,1 @@
-## PassSentry
+## Email Breach Extension
