@@ -10,6 +10,8 @@ app.use(express.json());
 
 app.use("/v1", require("./router/emailRouter"));
 
+app.use("/v1", require("./router/passRouter"));
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
