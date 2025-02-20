@@ -2,12 +2,12 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./db");
 dotenv.config();
-
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT;
 connectDB();
 app.use(express.json());
-
+app.use(cors());
 app.use("/v1", require("./router/emailRouter"));
 
 app.use("/v1", require("./router/passRouter"));
