@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const Email = () => {
 
-    const [result, setResult] = useState("")
+    const [result, setResult] = useState({ res: false, pwned: '', message: '' })
 
     const {
         register,
@@ -17,6 +17,7 @@ const Email = () => {
         try {
             const response = await axios.post("http://localhost:8080/v1/email", data);
             console.log("Response Data:", response.data);
+            setResult({ res: true, pwned: response.data.pwned, message: response.data.message })
         } catch (error) {
             console.error("Fetch error:", error.response?.data || error.message);
         }
@@ -41,8 +42,16 @@ const Email = () => {
                     </div>
                 </form>
             </div>
-            <div className='contentResult'>
-
+            <div className='contentResult flex flex-col items-center text-center'>
+                {result.res ?
+                    <>
+                        {result.pwned ? <div className='text-red-500'>Caution!</div> : <div className='text-green-500'>Secure!</div>}
+                        <div className='text-xs'>
+                            {result.message}
+                        </div>
+                    </>
+                    : ""
+                }
             </div>
         </div>
     )
