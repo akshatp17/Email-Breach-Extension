@@ -24,34 +24,49 @@ const Email = () => {
     };
 
     return (
-        <div className='mainContent'>
-            <div className='contentInput'>
-                <form action="POST" onSubmit={handleSubmit(handleCheck)} className='flex flex-col gap-2 my-2'>
-                    <div className='flex flex-col gap-3'>
+        <div className="mainContent w-full px-4">
+            <div className="contentInput">
+                <form
+                    action="POST"
+                    onSubmit={handleSubmit(handleCheck)}
+                    className="flex flex-col gap-3 my-2"
+                >
+                    <div className="flex flex-col gap-2">
                         <input
                             type="email"
-                            placeholder='Email to check'
+                            placeholder="Email to check"
                             {...register("email", { required: "Email is required" })}
-                            className='border-2 border-gray-200 rounded-md px-1 py-0.5'
-                            name='email' />
-
-                        {errors.email && <div className="text-red-600 text-xs">{errors.email.message}</div>}
+                            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            name="email"
+                        />
+                        {errors.email && (
+                            <div className="text-red-500 text-xs">{errors.email.message}</div>
+                        )}
                     </div>
-                    <div className='flex justify-center'>
-                        <button type='submit' className="hover:cursor-pointer">Check</button>
+                    <div className="flex justify-center">
+                        <button
+                            type="submit"
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-all shadow-md"
+                        >
+                            Check
+                        </button>
                     </div>
                 </form>
             </div>
-            <div className='contentResult flex flex-col items-center text-center'>
-                {result.res ?
+
+            <div className="contentResult flex flex-col items-center text-center mt-3">
+                {result.res ? (
                     <>
-                        {result.pwned ? <div className='text-red-500'>Caution!</div> : <div className='text-green-500'>Secure!</div>}
-                        <div className='text-xs'>
-                            {result.message}
-                        </div>
+                        {result.pwned ? (
+                            <div className="text-red-600 font-semibold text-lg">⚠ Caution!</div>
+                        ) : (
+                            <div className="text-green-600 font-semibold text-lg">✔ Secure!</div>
+                        )}
+                        <div className="text-gray-600 text-xs mt-1">{result.message}</div>
                     </>
-                    : ""
-                }
+                ) : (
+                    ""
+                )}
             </div>
         </div>
     )

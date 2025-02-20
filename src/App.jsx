@@ -11,22 +11,36 @@ function App() {
 
   return (
     <>
-      <div className="extensionContainer w-[250px] h-[300px] bg-fuchsia-50 flex flex-col justify-start items-center py-3">
-        <div className="extensionTitle font-bold">
+      <div className="extensionContainer w-[250px] h-[400px] bg-white shadow-lg rounded-b-xl flex flex-col justify-start items-center py-4 px-3 border border-gray-200">
+        <div className="extensionTitle font-semibold text-lg text-gray-800 text-center">
+          BreachPolice
+        </div>
+        <div className="extensionTitle font-semibold text-sm text-gray-600 mb-3 text-center">
           What do you want to check?
         </div>
+        <hr className='border-gray-300 w-full mb-3' />
         <div className="tabsSelect flex gap-2">
-          <button onClick={() => { handleModeChange("email") }} className="hover:cursor-pointer">Email</button>
-          <button onClick={() => { handleModeChange("password") }} className="hover:cursor-pointer">Password</button>
+          <button
+            onClick={() => handleModeChange("email")}
+            className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all"
+          >
+            Email
+          </button>
+          <button
+            onClick={() => handleModeChange("password")}
+            className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all"
+          >
+            Password
+          </button>
         </div>
-        {mode === "email" && (
-          <Email />
-        )}
-        {mode === "password" && (
-          <Password />
-        )}
+        <hr className='border-gray-300 w-full my-3' />
+        <div className="w-full flex justify-center">
+          {mode === "email" && <Email />}
+          {mode === "password" && <Password />}
+        </div>
       </div>
     </>
+
   )
 }
 
