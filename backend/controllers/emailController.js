@@ -11,8 +11,14 @@ const emailController = async (req, res) => {
     const response = await axios.get(
       `https://leakcheck.net/api/public?check=${encodeURIComponent(email)}`
     );
-
-    return res.json({ pwned: response.data.found, details: response.data });
+    const pwned = response.data.found;
+    return res.json({
+      pwned,
+      details: response.data,
+      message: pwned
+        ? "⚠️ This password has been pwned!"
+        : "✅ This password is safe.",
+    });
   } catch (error) {
     return res
       .status(500)
