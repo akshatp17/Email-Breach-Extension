@@ -16,8 +16,8 @@ const emailController = async (req, res) => {
       pwned,
       details: response.data,
       message: pwned
-        ? "⚠️ This password has been pwned!"
-        : "✅ This password is safe.",
+        ? "⚠️ This email has been pwned!"
+        : "✅ This email is safe.",
     });
   } catch (error) {
     return res
