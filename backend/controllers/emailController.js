@@ -1,24 +1,22 @@
-const emailModel = require("../models/emailModel");
+const axios = require("axios");
 
 const emailController = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
   try {
-    const email = new emailModel(req.body);
-    await email.save();
+    const response = await axios.get(
+      `https://leakcheck.net/api/public?check=${encodeURIComponent(email)}`
+    );
 
-    return res.status(201).send({
-      success: true,
-      message: "Email send successfully",
-
-      email,
-    });
+    return res.json({ pwned: response.data.found, details: response.data });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error in email API",
-      error,
-    });
+    return res
+      .status(500)
+      .json({ error: "Error checking email", details: error.message });
   }
 };
-
 module.exports = emailController;
