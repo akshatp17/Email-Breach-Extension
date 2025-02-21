@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const Email = () => {
+const Email = (props) => {
 
     const [result, setResult] = useState({ res: false, pwned: '', message: '' })
 
@@ -12,6 +12,16 @@ const Email = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    useEffect(() => {
+        if (props.mode) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+        }
+    }, [props.mode]);
 
     const handleCheck = async (data) => {
         try {
@@ -54,7 +64,7 @@ const Email = () => {
                 </form>
             </div>
 
-            <div className="contentResult flex flex-col items-center text-center mt-3">
+            <div className="contentResult flex flex-col items-center text-center my-3">
                 {result.res ? (
                     <>
                         {result.pwned ? (
