@@ -14,6 +14,7 @@ const urlController = async (req, res) => {
     const isMalicious = await checkUrlWithVirusTotal(url);
     return res.json({
       url,
+      isMalicious,
       message: isMalicious
         ? "⚠️ It is a malicious URL!"
         : "✅ This URL is safe to brouse.",
