@@ -1,11 +1,11 @@
 import React from 'react'
 import axios from 'axios'
-import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-const Email = (props) => {
+const Phishing = (props) => {
 
-    const [result, setResult] = useState({ res: false, pwned: '', message: '' })
+    const [result, setResult] = useState({ res: false, pwned: false, message: '' })
 
     const {
         register,
@@ -25,12 +25,7 @@ const Email = (props) => {
 
     const handleCheck = async (data) => {
         try {
-            props.changeload();
-            console.log(props.loading);
-            const response = await axios.post("http://localhost:8080/v1/email", data);
-            props.changeload();
-            console.log(props.loading);
-            console.log("Response Data:", response.data);
+            const response = await axios.post("http://localhost:8080/v1/url", data);
             setResult({ res: true, pwned: response.data.pwned, message: response.data.message })
         } catch (error) {
             console.error("Fetch error:", error.response?.data || error.message);
@@ -47,15 +42,12 @@ const Email = (props) => {
                 >
                     <div className="flex flex-col gap-2">
                         <input
-                            type="email"
-                            placeholder="Email to check"
-                            {...register("email", { required: "Email is required" })}
-                            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                            name="email"
+                            type="url"
+                            placeholder="Website to check"
+                            {...register("url", { required: "url is required" })}
+                            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all w-full"
+                            name="url"
                         />
-                        {errors.email && (
-                            <div className="text-red-500 text-xs">{errors.email.message}</div>
-                        )}
                     </div>
                     <div className="flex justify-center">
                         <button
@@ -72,9 +64,9 @@ const Email = (props) => {
                 {result.res ? (
                     <>
                         {result.pwned ? (
-                            <div className="text-red-600 font-semibold text-lg dark:text-red-500">⚠ Caution!</div>
+                            <div className="text-red-600 font-semibold text-lg dark:text-red-500 ">⚠ Caution!</div>
                         ) : (
-                            <div className="text-green-600 font-semibold text-lg dark:text-green-500">✔ Secure!</div>
+                            <div className="text-green-600 font-semibold text-lg dark:text-green-500 ">✔ Secure!</div>
                         )}
                         <div className="text-gray-600 text-xs mt-1 dark:text-gray-200">{result.message}</div>
                     </>
@@ -86,4 +78,4 @@ const Email = (props) => {
     )
 }
 
-export default Email
+export default Phishing

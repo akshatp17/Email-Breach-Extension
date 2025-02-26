@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Breach Extension",
+    "version": "1.0",
+    "description": "A Chrome extension which allows user to check for email and password breaches",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "http://localhost:8080/*"
+    ],
+    "action": {
+        "default_popup": "index.html"
+    }
+}
