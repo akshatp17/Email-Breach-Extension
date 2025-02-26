@@ -30,8 +30,8 @@ function Home() {
         setMode(mode)
     }
 
-    const changeLoading = () => {
-        setisLoading(!isloading)
+    const changeLoading = (state) => {
+        setisLoading(state)
     }
 
     return (

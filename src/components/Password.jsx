@@ -5,13 +5,17 @@ import { useForm } from 'react-hook-form';
 
 const Password = (props) => {
 
-    const [result, setResult] = useState({ res: false, pwned: false, message: '' })
+    const [result, setResult] = useState({ res: false, pwned: false, message: '' });
+    const [prevPassword, setPrevPassword] = useState("");
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm();
+
+    const password = watch("password", "");
 
     useEffect(() => {
         if (props.mode) {
@@ -23,12 +27,22 @@ const Password = (props) => {
         }
     }, [props.mode]);
 
+    useEffect(() => {
+        if (password.length < prevPassword.length) {
+            setResult({ res: false, pwned: false, message: '' });
+        }
+        setPrevPassword(password);
+    }, [password]);
+
     const handleCheck = async (data) => {
         try {
+            props.changeload(true);
             const response = await axios.post("http://localhost:8080/v1/pass", data);
             setResult({ res: true, pwned: response.data.pwned, message: response.data.message })
         } catch (error) {
             console.error("Fetch error:", error.response?.data || error.message);
+        } finally {
+            props.changeload(false);
         }
     };
 

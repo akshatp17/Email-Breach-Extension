@@ -6,12 +6,16 @@ import { useState, useEffect } from 'react';
 const Email = (props) => {
 
     const [result, setResult] = useState({ res: false, pwned: '', message: '' })
+    const [prevEmail, setPrevEmail] = useState("");
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm();
+
+    const emailInput = watch("email", "");
 
     useEffect(() => {
         if (props.mode) {
@@ -23,17 +27,24 @@ const Email = (props) => {
         }
     }, [props.mode]);
 
+    useEffect(() => {
+        if (emailInput.length < prevEmail.length) {
+            setResult({ res: false, pwned: false, message: '' });
+        }
+        setPrevEmail(emailInput);
+    }, [emailInput]);
+
     const handleCheck = async (data) => {
         try {
-            props.changeload();
-            console.log(props.loading);
+            props.changeload(true);
+
             const response = await axios.post("http://localhost:8080/v1/email", data);
-            props.changeload();
-            console.log(props.loading);
-            console.log("Response Data:", response.data);
+
             setResult({ res: true, pwned: response.data.pwned, message: response.data.message })
         } catch (error) {
             console.error("Fetch error:", error.response?.data || error.message);
+        } finally {
+            props.changeload(false);
         }
     };
 
