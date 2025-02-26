@@ -17,7 +17,7 @@ const urlController = async (req, res) => {
       isMalicious,
       message: isMalicious
         ? "⚠️ It is a malicious URL!"
-        : "✅ This URL is safe to brouse.",
+        : "✅ This URL is safe to browse.",
     });
   } catch (error) {
     console.error(error);
