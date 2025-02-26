@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion";
 import Password from "./Password"
 import Email from "./Email"
+import Phishing from "./Phishing";
 
 function Home() {
     const [mode, setMode] = useState("email")
@@ -35,7 +36,7 @@ function Home() {
 
     return (
         <>
-            <div className="extensionContainer w-[250px] h-[400px] bg-white shadow-lg rounded-b-xl flex flex-col justify-start items-center py-4 px-3 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+            <div className="extensionContainer w-[250px] h-[400px] bg-white shadow-lg flex flex-col justify-start items-center py-4 px-3 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                 {isloading ? <div>
                     Loading
                 </div> : ""}
@@ -51,9 +52,9 @@ function Home() {
 
                 <div className="relative flex bg-gray-200 rounded-full p-1 w-52 dark:bg-gray-700">
                     <motion.div
-                        className="absolute bg-white rounded-full shadow-md w-1/2 h-7 dark:bg-gray-800 dark:shadow-gray-700 dark:shadow-xs"
+                        className="absolute bg-white rounded-full shadow-md w-1/3 h-7 dark:bg-gray-800 dark:shadow-gray-700 dark:shadow-xs"
                         initial={{ x: -3, y: -4 }}
-                        animate={{ x: mode === "email" ? -3 : 100 }}
+                        animate={{ x: mode === "email" ? -3 : mode === "password" ? 65 : 134 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     />
 
@@ -72,6 +73,14 @@ function Home() {
                     >
                         Password
                     </button>
+
+                    <button
+                        onClick={() => handleModeChange("phishing")}
+                        className={`relative w-1/2 text-sm font-medium z-10 hover:cursor-pointer ${mode === "password" ? "text-black font-bold" : "text-gray-500"
+                            } dark:${mode === "phishing" ? "text-white font-bold" : "text-gray-400"}`}
+                    >
+                        Phishing
+                    </button>
                 </div>
 
                 <hr className="border-gray-300 w-full my-3 dark:border-gray-600" />
@@ -79,6 +88,7 @@ function Home() {
                 <div className="w-full flex justify-center flex-grow">
                     {mode === "email" && <Email mode={isDarkMode} loading={isloading} changeload={changeLoading} />}
                     {mode === "password" && <Password mode={isDarkMode} loading={isloading} changeload={changeLoading} />}
+                    {mode === "phishing" && <Phishing mode={isDarkMode} loading={isloading} changeload={changeLoading} />}
                 </div>
 
                 <button
