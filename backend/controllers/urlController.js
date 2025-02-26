@@ -12,7 +12,12 @@ const urlController = async (req, res) => {
 
   try {
     const isMalicious = await checkUrlWithVirusTotal(url);
-    res.json({ url, isMalicious });
+    return res.json({
+      url,
+      message: isMalicious
+        ? "⚠️ It is a malicious URL!"
+        : "✅ This URL is safe to brouse.",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "An error occurred while checking the URL" });
