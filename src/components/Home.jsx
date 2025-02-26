@@ -76,7 +76,7 @@ function Home() {
 
                     <button
                         onClick={() => handleModeChange("phishing")}
-                        className={`relative w-1/2 text-sm font-medium z-10 hover:cursor-pointer ${mode === "password" ? "text-black font-bold" : "text-gray-500"
+                        className={`relative w-1/2 text-sm font-medium z-10 hover:cursor-pointer ${mode === "phishing" ? "text-black font-bold" : "text-gray-500"
                             } dark:${mode === "phishing" ? "text-white font-bold" : "text-gray-400"}`}
                     >
                         Phishing
