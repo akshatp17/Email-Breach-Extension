@@ -11,6 +11,7 @@ app.use(cors());
 app.use("/v1", require("./router/emailRouter"));
 
 app.use("/v1", require("./router/passRouter"));
+app.use("/v1", require("./router/urlRouter"));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
