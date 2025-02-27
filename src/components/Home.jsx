@@ -37,9 +37,6 @@ function Home() {
     return (
         <>
             <div className="extensionContainer w-[250px] h-[400px] bg-white shadow-lg flex flex-col justify-start items-center py-4 px-3 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white">
-                {isloading ? <div>
-                    Loading
-                </div> : ""}
                 <div className="extensionTitle font-semibold text-lg text-gray-800 text-center dark:text-gray-200">
                     BreachPolice
                 </div>

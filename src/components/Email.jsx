@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import { handleCheck } from '../utils/handleCheck';
 
 const Email = (props) => {
 
@@ -34,26 +35,21 @@ const Email = (props) => {
         setPrevEmail(emailInput);
     }, [emailInput]);
 
-    const handleCheck = async (data) => {
-        try {
-            props.changeload(true);
-
-            const response = await axios.post("http://localhost:8080/v1/email", data);
-
-            setResult({ res: true, pwned: response.data.pwned, message: response.data.message })
-        } catch (error) {
-            console.error("Fetch error:", error.response?.data || error.message);
-        } finally {
-            props.changeload(false);
-        }
-    };
+    const checkEmail = (data) => {
+        handleCheck({
+            endpoint: "email",
+            data,
+            changeload: props.changeload,
+            setResult
+        });
+    }
 
     return (
         <div className="mainContent w-full px-4">
             <div className="contentInput">
                 <form
                     action="POST"
-                    onSubmit={handleSubmit(handleCheck)}
+                    onSubmit={handleSubmit(checkEmail)}
                     className="flex flex-col gap-3 my-2"
                 >
                     <div className="flex flex-col gap-2">
@@ -71,7 +67,8 @@ const Email = (props) => {
                     <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-all shadow-md hover:cursor-pointer"
+                            className={`px-4 py-2 ${props.loading ? "bg-blue-200 hover:cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 hover:cursor-pointer"} text-white rounded-lg text-sm font-medium transition-all shadow-md`}
+                            disabled={props.loading}
                         >
                             Check
                         </button>
